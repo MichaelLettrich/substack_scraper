@@ -18,34 +18,36 @@ Scrape paid or free articles from a Substack newsletter, saving both HTML and Ma
 
 3. Install dependencies:
     ```
-    pip install requests beautifulsoup4 lxml markdownify selenium
+    pip install -r requirements.txt
     ```
 
 4. Install ChromeDriver and ensure it's in your PATH.
 
-5. Edit `substack_scraper.py`:
-    - Set `BASE_URL` to your newsletter's main URL (e.g., `https://newsletter.eng-leadership.com`)
-    - Set `SITEMAP_STRING` to the sitemap path (e.g., `/sitemap.xml`)
 
 ## Usage
 
-- **Scrape free articles:**
-    ```
-    python substack_scraper.py
-    ```
+Substack scraper to download articles from a Substack newsletter.
+Supports both free and paid content (with manual login).
 
-- **Scrape paid articles (manual login required):**
-    ```
-    python substack_scraper.py --paid
-    ```
-    This will launch a browser for you to log in manually (doesn't matter email OTP or with password). After solving captcha and logging in, press Enter in the terminal to continue scraping.
+## Usage
+```
+python substack_scraper.py <newsletter_url> [-s <sitemap_path>] [-p] [-o <output_folder>] [-d <delay_seconds>] [-h]
 
-    **Note:** If paid content does not load correctly, you may need to increase the sleep duration in the script (see `sleep()` in `scrape_article_selenium`). Paid articles sometimes take longer to render after login.
+Options:
+    <newsletter_url>: Base URL of the Substack newsletter.
+    -s, --sitemap: Sitemap path of the Substack newsletter (default: sitemap.xml).
+    -p, --paid: Enable scraping paid content (requires manual login).
+    -o, --output: Output folder for saving articles (default: current directory).
+    -d, --delay: Delay between requests in seconds (default: 0.3).
+    -h, --help: Show help message and exit.
+
+Output:
+    Articles are saved in both HTML and Markdown formats in separate folders.
 
 ## Output
 
-- HTML files: `html_files/`
-- Markdown files: `md_files/`
+- HTML files: `html/`
+- Markdown files: `md/`
 - Article metadata: `articles.json`
 - List of URLs: `urls.txt`
 
